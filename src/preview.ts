@@ -74,7 +74,7 @@ body { background: #1e1e1e; color: #ccc; font-family: -apple-system, BlinkMacSys
 .toolbar button:hover { background: #505050; }
 .toolbar span { font-size: 13px; }
 .viewport { flex: 1; overflow: auto; display: flex; justify-content: center; padding: 16px; }
-canvas { box-shadow: 0 0 10px rgba(0,0,0,.5); }
+canvas { box-shadow: 0 0 10px rgba(0,0,0,.5); flex-shrink: 0; }
 .error { color: #f48771; padding: 16px; white-space: pre-wrap; font-family: monospace; font-size: 12px; flex: 1; overflow: auto; }
 .hidden { display: none !important; }
 </style>

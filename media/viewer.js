@@ -18,9 +18,12 @@
     function renderPage(num) {
         if (!pdfDoc) return;
         pdfDoc.getPage(num).then(function (page) {
-            var vp = page.getViewport({ scale: currentScale });
+            var pixelRatio = window.devicePixelRatio || 1;
+            var vp = page.getViewport({ scale: currentScale * pixelRatio });
             canvas.width = vp.width;
             canvas.height = vp.height;
+            canvas.style.width = (vp.width / pixelRatio) + 'px';
+            canvas.style.height = (vp.height / pixelRatio) + 'px';
             return page.render({ canvasContext: ctx, viewport: vp }).promise;
         }).then(function () {
             currentPage = num;
