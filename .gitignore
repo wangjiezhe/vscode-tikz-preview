@@ -5,3 +5,4 @@ node_modules
 *.vsix
 media/pdf.min.js
 media/pdf.worker.min.js
+release.skill
