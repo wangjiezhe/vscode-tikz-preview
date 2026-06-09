@@ -1,5 +1,19 @@
 # 更新日志
 
+## [0.2.0] - 2026-06-10
+
+### 新增
+- SVG 预览模式，通过 `jock.svg` 扩展（`_svg.showSvgByUri`）显示
+- PDF 转 SVG 支持：pdftocairo 和 pdf2svg
+- 设置项：`previewMode`（pdf/svg）、`svgConverter`（pdftocairo/pdf2svg）
+- 中文 README 和 CHANGELOG
+- MIT 许可证
+
+### 修复
+- SVG 模式下命令触发不再弹出 PDF 预览窗口
+- SVG 预览在内容变化时正确刷新
+- SVG 模式下尊重 `autoOpen: false` 设置
+
 ## [0.1.0] - 2026-06-09
 
 ### 新增

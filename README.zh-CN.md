@@ -11,6 +11,7 @@
 - **模板系统** — 使用自定义 `.pgs` 模板文件，或使用内置默认模板
 - **缩放控制** — 放大/缩小、适应宽度、手动输入百分比
 - **错误显示** — 编译错误直接显示在预览面板中
+- **SVG 预览** — 可选 SVG 模式，通过 `jock.svg` 扩展显示（pdftocairo/pdf2svg 转换）
 - **深色主题** — 预览面板与 VS Code 深色界面一致
 
 ## 依赖
@@ -28,6 +29,8 @@
 | `tikz-preview.templatePlaceholder` | `string` | `<>` | 模板中将被替换为文档内容的字符串 |
 | `tikz-preview.autoOpen` | `boolean` | `false` | 切换到匹配文件时自动打开预览 |
 | `tikz-preview.autoOpenExtensions` | `string[]` | `[".tikz", ".pgf", ".tkz"]` | 触发自动预览的文件扩展名 |
+| `tikz-preview.previewMode` | `string` | `"pdf"` | 预览模式：`"pdf"`（内置预览）或 `"svg"`（通过 jock.svg） |
+| `tikz-preview.svgConverter` | `string` | `"pdftocairo"` | PDF 转 SVG 工具：`"pdftocairo"` 或 `"pdf2svg"` |
 
 ## 使用方法
 
@@ -42,6 +45,10 @@
 - PDF.js 在主线程模式下运行，以规避 CSP 对 Web Worker 的限制
 
 ## Release Notes
+
+### 0.2.0
+
+SVG 预览模式、PDF 转 SVG 支持、中文文档。
 
 ### 0.1.0
 

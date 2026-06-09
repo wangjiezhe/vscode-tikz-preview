@@ -13,6 +13,7 @@ Edit `.tikz`, `.pgf`, or `.tkz` files and see the compiled PDF update in a side 
 - **Template system** — use custom `.pgs` template files, or the bundled default
 - **Zoom controls** — zoom in/out, fit-to-width, or type a percentage manually
 - **Error display** — compilation errors shown inline in the preview panel
+- **SVG preview** — optional SVG mode via `jock.svg` extension (pdftocairo/pdf2svg conversion)
 - **Dark theme** — preview panel matches VS Code's dark interface
 
 ## Requirements
@@ -30,6 +31,8 @@ Edit `.tikz`, `.pgf`, or `.tkz` files and see the compiled PDF update in a side 
 | `tikz-preview.templatePlaceholder` | `string` | `<>` | String in template replaced with document content |
 | `tikz-preview.autoOpen` | `boolean` | `false` | Auto-open preview when switching to a matching file |
 | `tikz-preview.autoOpenExtensions` | `string[]` | `[".tikz", ".pgf", ".tkz"]` | Extensions that trigger auto preview |
+| `tikz-preview.previewMode` | `string` | `"pdf"` | Preview mode: `"pdf"` (built-in) or `"svg"` (via jock.svg) |
+| `tikz-preview.svgConverter` | `string` | `"pdftocairo"` | PDF-to-SVG converter: `"pdftocairo"` or `"pdf2svg"` |
 
 ## Usage
 
@@ -44,6 +47,10 @@ Templates use a placeholder (default `<>`) that is replaced with your document c
 - PDF.js runs in main-thread mode to avoid CSP restrictions with web workers
 
 ## Release Notes
+
+### 0.2.0
+
+SVG preview mode via jock.svg, PDF-to-SVG conversion, Chinese docs.
 
 ### 0.1.0
 

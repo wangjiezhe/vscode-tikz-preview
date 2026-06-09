@@ -2,6 +2,20 @@
 
 [中文更新日志](CHANGELOG.zh-CN.md)
 
+## [0.2.0] - 2026-06-10
+
+### Added
+- SVG preview mode via `jock.svg` extension (`_svg.showSvgByUri`)
+- PDF-to-SVG conversion: pdftocairo and pdf2svg support
+- Settings: `previewMode` (pdf/svg), `svgConverter` (pdftocairo/pdf2svg)
+- Chinese README and CHANGELOG
+- MIT license
+
+### Fixed
+- SVG mode no longer opens PDF preview panel on command
+- SVG preview refreshes correctly on content changes
+- `autoOpen: false` respected in SVG mode
+
 ## [0.1.0] - 2026-06-09
 
 ### Added
