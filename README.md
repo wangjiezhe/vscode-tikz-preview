@@ -2,6 +2,8 @@
 
 Live preview for TikZ files in VS Code — like KtikZ, but inside your editor.
 
+[中文说明](README.zh-CN.md)
+
 Edit `.tikz`, `.pgf`, or `.tkz` files and see the compiled PDF update in a side panel.
 
 ## Features
