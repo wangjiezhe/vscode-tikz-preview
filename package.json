@@ -11,6 +11,9 @@
     "type": "git",
     "url": "https://github.com/wangjiezhe/vscode-tikz-preview"
   },
+  "extensionDependencies": [
+    "jock.svg"
+  ],
   "categories": [
     "Other"
   ],
