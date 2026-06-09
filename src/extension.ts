@@ -73,11 +73,11 @@ export function activate(context: vscode.ExtensionContext) {
     });
     context.subscriptions.push(previewCommand);
 
-    // Auto-open preview when switching to a TikZ file (if enabled)
+    // Update preview when switching to a TikZ file
     const activeEditorChange = vscode.window.onDidChangeActiveTextEditor((editor) => {
         if (editor && isTikzFile(editor)) {
             const config = getConfig();
-            if (config.autoOpen) {
+            if (config.autoOpen || preview.isVisible()) {
                 preview.show(editor.document.fileName);
                 doCompile(editor);
             }
@@ -98,11 +98,11 @@ export function activate(context: vscode.ExtensionContext) {
     });
     context.subscriptions.push(textChange);
 
-    // Check if active editor is already a TikZ file on activation (if autoOpen enabled)
+    // Check if active editor is already a TikZ file on activation
     const activeEditor = vscode.window.activeTextEditor;
     if (activeEditor && isTikzFile(activeEditor)) {
         const config = getConfig();
-        if (config.autoOpen) {
+        if (config.autoOpen || preview.isVisible()) {
             preview.show(activeEditor.document.fileName);
             doCompile(activeEditor);
         }

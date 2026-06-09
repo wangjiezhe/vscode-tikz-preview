@@ -36,6 +36,10 @@ export class PreviewManager {
         this.panel.webview.html = this.buildHtml();
     }
 
+    isVisible(): boolean {
+        return this.panel !== null;
+    }
+
     render(pdfPath: string): void {
         if (!this.panel) { return; }
         const uri = this.panel.webview.asWebviewUri(vscode.Uri.file(pdfPath));
