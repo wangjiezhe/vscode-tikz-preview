@@ -55,6 +55,19 @@
           "type": "string",
           "default": "<>",
           "description": "String in the template that will be replaced with the document content."
+        },
+        "tikz-preview.autoOpen": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically open preview when switching to a TikZ file."
+        },
+        "tikz-preview.autoOpenExtensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [".tikz", ".pgf", ".tkz"],
+          "description": "File extensions that trigger automatic preview."
         }
       }
     }

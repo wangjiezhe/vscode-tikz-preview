@@ -3,8 +3,6 @@ import * as vscode from 'vscode';
 import { Compiler } from './compiler';
 import { PreviewManager } from './preview';
 
-const TIKZ_EXTENSIONS = new Set(['.tikz', '.pgf', '.tkz']);
-
 export function activate(context: vscode.ExtensionContext) {
     console.log('TikZ Preview extension activated');
 
@@ -13,6 +11,12 @@ export function activate(context: vscode.ExtensionContext) {
 
     let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
+    function getAutoExtensions(): Set<string> {
+        const cfg = vscode.workspace.getConfiguration('tikz-preview');
+        const exts = cfg.get<string[]>('autoOpenExtensions', ['.tikz', '.pgf', '.tkz']);
+        return new Set(exts);
+    }
+
     function getConfig() {
         const cfg = vscode.workspace.getConfiguration('tikz-preview');
         return {
@@ -20,13 +24,14 @@ export function activate(context: vscode.ExtensionContext) {
             shellEscape: cfg.get<boolean>('shellEscape', false),
             templatePath: cfg.get<string>('templatePath', ''),
             placeholder: cfg.get<string>('templatePlaceholder', '<>'),
+            autoOpen: cfg.get<boolean>('autoOpen', false),
         };
     }
 
     function isTikzFile(editor: vscode.TextEditor | undefined): boolean {
         if (!editor) { return false; }
         const ext = editor.document.fileName.match(/\.\w+$/)?.[0] ?? '';
-        return TIKZ_EXTENSIONS.has(ext);
+        return getAutoExtensions().has(ext);
     }
 
     async function doCompile(editor: vscode.TextEditor) {
@@ -68,11 +73,14 @@ export function activate(context: vscode.ExtensionContext) {
     });
     context.subscriptions.push(previewCommand);
 
-    // Auto-open preview when switching to a TikZ file
+    // Auto-open preview when switching to a TikZ file (if enabled)
     const activeEditorChange = vscode.window.onDidChangeActiveTextEditor((editor) => {
         if (editor && isTikzFile(editor)) {
-            preview.show(editor.document.fileName);
-            doCompile(editor);
+            const config = getConfig();
+            if (config.autoOpen) {
+                preview.show(editor.document.fileName);
+                doCompile(editor);
+            }
         }
     });
     context.subscriptions.push(activeEditorChange);
@@ -90,11 +98,14 @@ export function activate(context: vscode.ExtensionContext) {
     });
     context.subscriptions.push(textChange);
 
-    // Check if active editor is already a TikZ file on activation
+    // Check if active editor is already a TikZ file on activation (if autoOpen enabled)
     const activeEditor = vscode.window.activeTextEditor;
     if (activeEditor && isTikzFile(activeEditor)) {
-        preview.show(activeEditor.document.fileName);
-        doCompile(activeEditor);
+        const config = getConfig();
+        if (config.autoOpen) {
+            preview.show(activeEditor.document.fileName);
+            doCompile(activeEditor);
+        }
     }
 
     context.subscriptions.push({
