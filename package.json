@@ -3,6 +3,7 @@
   "displayName": "vscode-tikz-preview",
   "description": "Render tikz lively like ktikz",
   "version": "0.1.1",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.120.0"
   },
