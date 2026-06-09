@@ -1,6 +1,6 @@
 # Change Log
 
-## [0.0.1] - 2026-06-09
+## [0.1.0] - 2026-06-09
 
 ### Added
 - Live PDF preview for TikZ files (.tikz, .pgf, .tkz) in a side panel

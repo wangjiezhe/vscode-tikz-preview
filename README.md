@@ -43,6 +43,6 @@ Templates use a placeholder (default `<>`) that is replaced with your document c
 
 ## Release Notes
 
-### 0.0.1
+### 0.1.0
 
 Initial release — live TikZ preview with template support, zoom controls, and configurable compilation.

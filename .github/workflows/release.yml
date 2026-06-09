@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Compile extension
+        run: npm run package
+
+      - name: Install vsce
+        run: npm install -g vsce
+
+      - name: Package VSIX
+        run: vsce package
+
+      - name: Release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: *.vsix
