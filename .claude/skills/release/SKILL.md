@@ -39,24 +39,15 @@ Update the `"version"` field in both files to the new version:
 
 ### 3. Update CHANGELOG files
 
-Review `git log --oneline <last-tag>..HEAD` to identify new features and fixes since the last release.
+Review `git log --oneline <last-tag>..HEAD` to identify changes since the last release.
 
-Prepend a new section to both files:
+Follow the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) spec:
 
-- `CHANGELOG.md` — in English
-- `CHANGELOG.zh-CN.md` — in Chinese
-
-Format:
-
-```markdown
-## [<version>] - <YYYY-MM-DD>
-
-### Added
-- <feature>
-
-### Fixed
-- <fix>
-```
+- Prepend a new version section to both `CHANGELOG.md` and `CHANGELOG.zh-CN.md`
+- Version header: `## [X.Y.Z] - YYYY-MM-DD`
+- Sections in order (only include those with entries): `### Added`, `### Changed`, `### Deprecated`, `### Removed`, `### Fixed`, `### Security`
+- Each entry is a bullet: `- <description>`
+- Write in English for `CHANGELOG.md`, Chinese for `CHANGELOG.zh-CN.md`
 
 ### 4. Update README files
 
