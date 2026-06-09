@@ -1,5 +1,5 @@
 (function () {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = '';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = globalThis.WORKER_SRC_PLACEHOLDER;
 
     var pdfDoc = null;
     var currentPage = 1;
@@ -75,7 +75,7 @@
         if (msg.type === 'render') {
             errorDiv.classList.add('hidden');
             viewportEl.classList.remove('hidden');
-            pdfjsLib.getDocument(msg.pdfPath).promise.then(function (pdf) {
+            pdfjsLib.getDocument({ url: msg.pdfPath, disableWorker: true }).promise.then(function (pdf) {
                 pdfDoc = pdf;
                 if (fitWidth) {
                     fitToWidth();
