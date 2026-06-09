@@ -9,15 +9,55 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "workspaceContains:**/*.tikz",
+    "workspaceContains:**/*.pgf",
+    "workspaceContains:**/*.tkz",
+    "onCommand:tikz-preview.preview"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "vscode-tikz-preview.helloWorld",
-        "title": "Hello World"
+        "command": "tikz-preview.preview",
+        "title": "TikZ: Preview",
+        "icon": "$(open-preview)"
       }
-    ]
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "tikz-preview.preview",
+          "when": "resourceExtname == .tikz || resourceExtname == .pgf || resourceExtname == .tkz",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "TikZ Preview",
+      "properties": {
+        "tikz-preview.latexCommand": {
+          "type": "string",
+          "default": "pdflatex",
+          "description": "LaTeX compiler command (pdflatex, lualatex, xelatex, etc.)"
+        },
+        "tikz-preview.shellEscape": {
+          "type": "boolean",
+          "default": false,
+          "description": "Pass -shell-escape flag to the LaTeX compiler"
+        },
+        "tikz-preview.templatePath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to a .pgs template file. Leave empty to use the bundled default template."
+        },
+        "tikz-preview.templatePlaceholder": {
+          "type": "string",
+          "default": "<>",
+          "description": "String in the template that will be replaced with the document content."
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
@@ -47,6 +87,6 @@
     "typescript-eslint": "^8.56.1"
   },
   "dependencies": {
-    "pdfjs-dist": "^6.0.227"
+    "pdfjs-dist": "^5.7.284"
   }
 }
