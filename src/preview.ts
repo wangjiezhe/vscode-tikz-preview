@@ -34,6 +34,19 @@ export class PreviewManager {
         });
 
         this.panel.webview.html = this.buildHtml();
+
+        // Shrink panel from ~50% to ~1/3 width
+        setTimeout(() => this.shrinkPanel(), 100);
+    }
+
+    private async shrinkPanel(): Promise<void> {
+        if (!this.panel) { return; }
+        // Briefly focus the panel to resize it, then return focus to editor
+        await vscode.commands.executeCommand('workbench.action.focusNextPart');
+        await vscode.commands.executeCommand('workbench.action.decreaseViewWidth');
+        await vscode.commands.executeCommand('workbench.action.decreaseViewWidth');
+        await vscode.commands.executeCommand('workbench.action.decreaseViewWidth');
+        await vscode.commands.executeCommand('workbench.action.focusPreviousPart');
     }
 
     isVisible(): boolean {
