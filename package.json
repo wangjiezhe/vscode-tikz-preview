@@ -2,7 +2,7 @@
   "name": "vscode-tikz-preview",
   "displayName": "vscode-tikz-preview",
   "description": "Render tikz lively like ktikz",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "engines": {
     "vscode": "^1.120.0"
   },
