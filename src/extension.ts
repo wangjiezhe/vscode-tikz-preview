@@ -61,7 +61,7 @@ export function activate(context: vscode.ExtensionContext) {
         debounceTimer = setTimeout(() => {
             debounceTimer = null;
             doCompile(editor);
-        }, 300);
+        }, 1000);
     }
 
     // Command: manual preview toggle
