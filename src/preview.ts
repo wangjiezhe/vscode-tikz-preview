@@ -23,6 +23,7 @@ export class PreviewManager {
                 retainContextWhenHidden: true,
                 localResourceRoots: [
                     vscode.Uri.joinPath(this.extensionUri, 'media'),
+                    vscode.Uri.file('/tmp'),
                 ],
             }
         );
