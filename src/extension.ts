@@ -54,7 +54,9 @@ export function activate(context: vscode.ExtensionContext) {
             if (config.previewMode === 'svg') {
                 try {
                     const svgPath = await compiler.convertToSvg(result.pdfPath, baseName, config.svgConverter);
-                    await vscode.commands.executeCommand('_svg.showSvgByUri', vscode.Uri.file(svgPath));
+                    if (config.autoOpen || svgActive) {
+                        await vscode.commands.executeCommand('_svg.showSvgByUri', vscode.Uri.file(svgPath));
+                    }
                 } catch (err) {
                     preview.showError((err as Error).message);
                 }
