@@ -79,7 +79,10 @@ export function activate(context: vscode.ExtensionContext) {
     const previewCommand = vscode.commands.registerCommand('tikz-preview.preview', () => {
         const editor = vscode.window.activeTextEditor;
         if (!editor) { return; }
-        preview.show(editor.document.fileName);
+        const config = getConfig();
+        if (config.previewMode === 'pdf') {
+            preview.show(editor.document.fileName);
+        }
         doCompile(editor);
     });
     context.subscriptions.push(previewCommand);
@@ -88,8 +91,13 @@ export function activate(context: vscode.ExtensionContext) {
     const activeEditorChange = vscode.window.onDidChangeActiveTextEditor((editor) => {
         if (editor && isTikzFile(editor)) {
             const config = getConfig();
-            if (config.autoOpen || preview.isVisible()) {
-                preview.show(editor.document.fileName);
+            const shouldCompile = config.autoOpen
+                || config.previewMode === 'svg'
+                || preview.isVisible();
+            if (shouldCompile) {
+                if (config.previewMode === 'pdf') {
+                    preview.show(editor.document.fileName);
+                }
                 doCompile(editor);
             }
         }
@@ -113,8 +121,13 @@ export function activate(context: vscode.ExtensionContext) {
     const activeEditor = vscode.window.activeTextEditor;
     if (activeEditor && isTikzFile(activeEditor)) {
         const config = getConfig();
-        if (config.autoOpen || preview.isVisible()) {
-            preview.show(activeEditor.document.fileName);
+        const shouldCompile = config.autoOpen
+            || config.previewMode === 'svg'
+            || preview.isVisible();
+        if (shouldCompile) {
+            if (config.previewMode === 'pdf') {
+                preview.show(activeEditor.document.fileName);
+            }
             doCompile(activeEditor);
         }
     }
