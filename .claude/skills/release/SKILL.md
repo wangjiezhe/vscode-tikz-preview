@@ -20,7 +20,7 @@ The user should specify the version, e.g. `0.3.0`. If they don't, ask.
 Update the `"version"` field in both files to the new version:
 
 - `package.json`
-- `package-lock.json` (use `sed` since the file is large)
+- `package-lock.json` — has TWO places: the root `"version"` field and inside the `"packages"."".version"` entry. Use `sed` on both, or check with `grep -n '"version": "<old>"'` to verify all instances are updated.
 
 ### 3. Update CHANGELOG files
 
