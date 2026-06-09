@@ -10,14 +10,14 @@ export class PreviewManager {
 
     show(title: string): void {
         if (this.panel) {
-            this.panel.reveal(vscode.ViewColumn.Beside);
+            this.panel.reveal(vscode.ViewColumn.Beside, true);
             return;
         }
 
         this.panel = vscode.window.createWebviewPanel(
             'tikzPreview',
             `${title} - Preview`,
-            vscode.ViewColumn.Beside,
+            { viewColumn: vscode.ViewColumn.Beside, preserveFocus: true },
             {
                 enableScripts: true,
                 retainContextWhenHidden: true,
