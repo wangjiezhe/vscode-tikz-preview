@@ -35,7 +35,7 @@ export class PreviewManager {
     }
 
     render(pdfPath: string): void {
-        if (!this.panel) return;
+        if (!this.panel) { return; }
         const uri = this.panel.webview.asWebviewUri(vscode.Uri.file(pdfPath));
         this.panel.webview.postMessage({ type: 'render', pdfPath: uri.toString() });
     }

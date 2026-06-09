@@ -23,7 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     function isTikzFile(editor: vscode.TextEditor | undefined): boolean {
-        if (!editor) return false;
+        if (!editor) { return false; }
         const ext = editor.document.fileName.match(/\.\w+$/)?.[0] ?? '';
         return TIKZ_EXTENSIONS.has(ext);
     }
@@ -59,7 +59,7 @@ export function activate(context: vscode.ExtensionContext) {
     // Command: manual preview toggle
     const previewCommand = vscode.commands.registerCommand('tikz-preview.preview', () => {
         const editor = vscode.window.activeTextEditor;
-        if (!editor) return;
+        if (!editor) { return; }
         preview.show(editor.document.fileName);
         doCompile(editor);
     });
