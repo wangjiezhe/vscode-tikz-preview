@@ -46,6 +46,10 @@
 
 ## Release Notes
 
+### 0.2.1
+
+扩展依赖声明、Release skill、小修复。
+
 ### 0.2.0
 
 SVG 预览模式、PDF 转 SVG 支持、中文文档。

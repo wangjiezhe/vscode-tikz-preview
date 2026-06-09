@@ -48,6 +48,10 @@ Templates use a placeholder (default `<>`) that is replaced with your document c
 
 ## Release Notes
 
+### 0.2.1
+
+Extension dependency declaration, release skill, minor fixes.
+
 ### 0.2.0
 
 SVG preview mode via jock.svg, PDF-to-SVG conversion, Chinese docs.

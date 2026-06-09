@@ -2,6 +2,15 @@
 
 [中文更新日志](CHANGELOG.zh-CN.md)
 
+## [0.2.1] - 2026-06-10
+
+### Added
+- Declare `jock.svg` as extension dependency for automatic installation prompt
+- Release skill for automated version bump workflows
+
+### Fixed
+- Both `version` fields in package-lock.json are now updated during release
+
 ## [0.2.0] - 2026-06-10
 
 ### Added
