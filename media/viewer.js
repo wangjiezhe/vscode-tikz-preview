@@ -16,7 +16,7 @@
     var nextBtn = document.getElementById('nextPage');
 
     function renderPage(num) {
-        if (!pdfDoc) return;
+        if (!pdfDoc) {return;}
         pdfDoc.getPage(num).then(function (page) {
             var pixelRatio = window.devicePixelRatio || 1;
             var vp = page.getViewport({ scale: currentScale * pixelRatio });
@@ -32,7 +32,7 @@
     }
 
     function updateUI() {
-        if (!pdfDoc) return;
+        if (!pdfDoc) {return;}
         zoomLevel.value = Math.round(currentScale * 100) + '%';
         pageInfo.textContent = 'Page ' + currentPage + ' / ' + pdfDoc.numPages;
         prevBtn.classList.toggle('hidden', pdfDoc.numPages <= 1);
@@ -63,7 +63,7 @@
     });
 
     function fitToWidth() {
-        if (!pdfDoc) return;
+        if (!pdfDoc) {return;}
         pdfDoc.getPage(currentPage).then(function (page) {
             var vp = page.getViewport({ scale: 1 });
             currentScale = (viewportEl.clientWidth / vp.width) * 0.9;
@@ -89,11 +89,11 @@
     });
 
     prevBtn.addEventListener('click', function () {
-        if (currentPage > 1) renderPage(currentPage - 1);
+        if (currentPage > 1) {renderPage(currentPage - 1);}
     });
 
     nextBtn.addEventListener('click', function () {
-        if (pdfDoc && currentPage < pdfDoc.numPages) renderPage(currentPage + 1);
+        if (pdfDoc && currentPage < pdfDoc.numPages) {renderPage(currentPage + 1);}
     });
 
     window.addEventListener('message', function (event) {
@@ -121,6 +121,6 @@
     });
 
     window.addEventListener('resize', function () {
-        if (fitWidth) fitToWidth();
+        if (fitWidth) {fitToWidth();}
     });
 })();
