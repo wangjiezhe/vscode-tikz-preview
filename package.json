@@ -21,7 +21,7 @@
       {
         "command": "tikz-preview.preview",
         "title": "TikZ: Preview",
-        "icon": "$(open-preview)"
+        "icon": "$(zap)"
       }
     ],
     "menus": {
