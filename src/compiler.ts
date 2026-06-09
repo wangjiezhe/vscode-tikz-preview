@@ -18,6 +18,7 @@ export class Compiler {
     private currentProcess: cp.ChildProcess | null = null;
     private tempDir: string | null = null;
     private templateDir: string | null = null;
+    private svgCounter = 0;
 
     constructor(private extensionUri: vscode.Uri) {}
 
@@ -139,7 +140,19 @@ export class Compiler {
     }
 
     async convertToSvg(pdfPath: string, baseName: string, converter: string): Promise<string> {
-        const svgPath = path.join(this.tempDir!, baseName + '.svg');
+        // Walk counter to produce unique filename each time so jock.svg
+        // detects it as a new file and refreshes its preview.
+        do { this.svgCounter++; } while (
+            fs.existsSync(path.join(this.tempDir!, `${baseName}-${this.svgCounter}.svg`))
+        );
+        const svgPath = path.join(this.tempDir!, `${baseName}-${this.svgCounter}.svg`);
+
+        // Remove previous SVG to avoid accumulating files
+        const prevSvgPath = path.join(this.tempDir!, `${baseName}-${this.svgCounter - 1}.svg`);
+        if (fs.existsSync(prevSvgPath)) {
+            try { fs.unlinkSync(prevSvgPath); } catch { /* ignore */ }
+        }
+
         const args = converter === 'pdf2svg'
             ? [pdfPath, svgPath]
             : ['-svg', pdfPath, svgPath];
