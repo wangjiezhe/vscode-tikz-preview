@@ -1,5 +1,5 @@
 (function () {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = WORKER_SRC_PLACEHOLDER;
+    pdfjsLib.GlobalWorkerOptions.workerSrc = globalThis.WORKER_SRC_PLACEHOLDER;
 
     var pdfDoc = null;
     var currentPage = 1;

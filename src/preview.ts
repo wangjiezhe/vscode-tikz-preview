@@ -92,9 +92,9 @@ canvas { box-shadow: 0 0 10px rgba(0,0,0,.5); }
   <canvas id="canvas"></canvas>
 </div>
 <div id="error" class="error hidden"></div>
-<script src="${pdfjsUri.toString()}"></script>
-<script>var WORKER_SRC_PLACEHOLDER = '${workerUri.toString()}';</script>
-<script src="${viewerJsUri.toString()}"></script>
+<script type="module" src="${pdfjsUri.toString()}"></script>
+<script>globalThis.WORKER_SRC_PLACEHOLDER = '${workerUri.toString()}';</script>
+<script type="module" src="${viewerJsUri.toString()}"></script>
 </body>
 </html>`;
     }
