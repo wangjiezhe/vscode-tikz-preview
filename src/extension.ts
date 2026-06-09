@@ -1,26 +1,105 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { Compiler } from './compiler';
+import { PreviewManager } from './preview';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+const TIKZ_EXTENSIONS = new Set(['.tikz', '.pgf', '.tkz']);
+
 export function activate(context: vscode.ExtensionContext) {
+    console.log('TikZ Preview extension activated');
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "vscode-tikz-preview" is now active!');
+    const compiler = new Compiler(context.extensionUri);
+    const preview = new PreviewManager(context.extensionUri);
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('vscode-tikz-preview.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from vscode-tikz-preview!');
-	});
+    let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
-	context.subscriptions.push(disposable);
+    function getConfig() {
+        const cfg = vscode.workspace.getConfiguration('tikz-preview');
+        return {
+            latexCommand: cfg.get<string>('latexCommand', 'pdflatex'),
+            shellEscape: cfg.get<boolean>('shellEscape', false),
+            templatePath: cfg.get<string>('templatePath', ''),
+            placeholder: cfg.get<string>('templatePlaceholder', '<>'),
+        };
+    }
+
+    function isTikzFile(editor: vscode.TextEditor | undefined): boolean {
+        if (!editor) return false;
+        const ext = editor.document.fileName.match(/\.\w+$/)?.[0] ?? '';
+        return TIKZ_EXTENSIONS.has(ext);
+    }
+
+    async function doCompile(editor: vscode.TextEditor) {
+        const config = getConfig();
+        const text = editor.document.getText();
+        const result = await compiler.compile(
+            text,
+            config.templatePath,
+            config.placeholder,
+            config.latexCommand,
+            config.shellEscape
+        );
+
+        if ('pdfPath' in result) {
+            preview.render(result.pdfPath);
+        } else {
+            preview.showError(result.error);
+        }
+    }
+
+    function triggerCompile(editor: vscode.TextEditor) {
+        if (debounceTimer) {
+            clearTimeout(debounceTimer);
+        }
+        debounceTimer = setTimeout(() => {
+            debounceTimer = null;
+            doCompile(editor);
+        }, 300);
+    }
+
+    // Command: manual preview toggle
+    const previewCommand = vscode.commands.registerCommand('tikz-preview.preview', () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) return;
+        preview.show(editor.document.fileName);
+        doCompile(editor);
+    });
+    context.subscriptions.push(previewCommand);
+
+    // Auto-open preview when switching to a TikZ file
+    const activeEditorChange = vscode.window.onDidChangeActiveTextEditor((editor) => {
+        if (editor && isTikzFile(editor)) {
+            preview.show(editor.document.fileName);
+            doCompile(editor);
+        }
+    });
+    context.subscriptions.push(activeEditorChange);
+
+    // Re-compile on document change
+    const textChange = vscode.workspace.onDidChangeTextDocument((e) => {
+        const editor = vscode.window.activeTextEditor;
+        if (
+            editor &&
+            e.document === editor.document &&
+            isTikzFile(editor)
+        ) {
+            triggerCompile(editor);
+        }
+    });
+    context.subscriptions.push(textChange);
+
+    // Check if active editor is already a TikZ file on activation
+    const activeEditor = vscode.window.activeTextEditor;
+    if (activeEditor && isTikzFile(activeEditor)) {
+        preview.show(activeEditor.document.fileName);
+        doCompile(activeEditor);
+    }
+
+    context.subscriptions.push({
+        dispose: () => {
+            compiler.dispose();
+            preview.dispose();
+        },
+    });
 }
 
-// This method is called when your extension is deactivated
 export function deactivate() {}
