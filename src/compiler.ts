@@ -17,6 +17,7 @@ export type CompileResult = CompileSuccess | CompileFailure;
 export class Compiler {
     private currentProcess: cp.ChildProcess | null = null;
     private tempDir: string | null = null;
+    private templateDir: string | null = null;
 
     constructor(private extensionUri: vscode.Uri) {}
 
@@ -41,6 +42,10 @@ export class Compiler {
 
         const sourcePath = path.join(this.tempDir, 'source.tex');
         fs.writeFileSync(sourcePath, source);
+
+        if (this.templateDir) {
+            this.copyInputFiles(source, this.templateDir);
+        }
 
         const args: string[] = [
             '-interaction=nonstopmode',
@@ -92,7 +97,10 @@ export class Compiler {
     }
 
     private loadTemplate(templatePath: string): string {
+        this.templateDir = null;
+
         if (templatePath && fs.existsSync(templatePath)) {
+            this.templateDir = path.dirname(templatePath);
             return fs.readFileSync(templatePath, 'utf8');
         }
 
@@ -108,6 +116,23 @@ export class Compiler {
         }
 
         return template;
+    }
+
+    private copyInputFiles(source: string, dir: string): void {
+        const re = /\\(?:input|include)\s*\{([^}]+)\}|\\(?:input|include)\s+(\S+)/g;
+        let match: RegExpExecArray | null;
+        while ((match = re.exec(source)) !== null) {
+            const filename = match[1] ?? match[2];
+            const src = path.resolve(dir, filename);
+            if (fs.existsSync(src) && fs.statSync(src).isFile()) {
+                const dest = path.join(this.tempDir!, path.basename(src));
+                if (!fs.existsSync(dest)) {
+                    fs.copyFileSync(src, dest);
+                    const subSource = fs.readFileSync(src, 'utf8');
+                    this.copyInputFiles(subSource, dir);
+                }
+            }
+        }
     }
 
     private extractError(output: string): string {
