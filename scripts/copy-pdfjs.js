@@ -9,7 +9,7 @@ if (!fs.existsSync(mediaDir)) {
 const files = ['pdf.min.mjs', 'pdf.worker.min.mjs'];
 for (const file of files) {
     const src = path.join(__dirname, '..', 'node_modules', 'pdfjs-dist', 'build', file);
-    const dest = path.join(mediaDir, file);
+    const dest = path.join(mediaDir, file.replace('.mjs', '.js'));
     fs.copyFileSync(src, dest);
-    console.log(`Copied ${file} to media/`);
+    console.log(`Copied ${file} to media/${path.basename(dest)}`);
 }

@@ -51,10 +51,10 @@ export class PreviewManager {
 
     private buildHtml(): string {
         const pdfjsUri = this.panel!.webview.asWebviewUri(
-            vscode.Uri.joinPath(this.extensionUri, 'media', 'pdf.min.mjs')
+            vscode.Uri.joinPath(this.extensionUri, 'media', 'pdf.min.js')
         );
         const workerUri = this.panel!.webview.asWebviewUri(
-            vscode.Uri.joinPath(this.extensionUri, 'media', 'pdf.worker.min.mjs')
+            vscode.Uri.joinPath(this.extensionUri, 'media', 'pdf.worker.min.js')
         );
         const viewerJsUri = this.panel!.webview.asWebviewUri(
             vscode.Uri.joinPath(this.extensionUri, 'media', 'viewer.js')
