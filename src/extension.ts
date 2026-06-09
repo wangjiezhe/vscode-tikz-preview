@@ -10,6 +10,7 @@ export function activate(context: vscode.ExtensionContext) {
     const preview = new PreviewManager(context.extensionUri);
 
     let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+    let svgActive = false;
 
     function getAutoExtensions(): Set<string> {
         const cfg = vscode.workspace.getConfiguration('tikz-preview');
@@ -82,6 +83,8 @@ export function activate(context: vscode.ExtensionContext) {
         const config = getConfig();
         if (config.previewMode === 'pdf') {
             preview.show(editor.document.fileName);
+        } else {
+            svgActive = true;
         }
         doCompile(editor);
     });
@@ -92,7 +95,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (editor && isTikzFile(editor)) {
             const config = getConfig();
             const shouldCompile = config.autoOpen
-                || config.previewMode === 'svg'
+                || svgActive
                 || preview.isVisible();
             if (shouldCompile) {
                 if (config.previewMode === 'pdf') {
@@ -122,7 +125,7 @@ export function activate(context: vscode.ExtensionContext) {
     if (activeEditor && isTikzFile(activeEditor)) {
         const config = getConfig();
         const shouldCompile = config.autoOpen
-            || config.previewMode === 'svg'
+            || svgActive
             || preview.isVisible();
         if (shouldCompile) {
             if (config.previewMode === 'pdf') {
