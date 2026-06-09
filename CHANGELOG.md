@@ -1,5 +1,7 @@
 # Change Log
 
+[中文更新日志](CHANGELOG.zh-CN.md)
+
 ## [0.1.0] - 2026-06-09
 
 ### Added
