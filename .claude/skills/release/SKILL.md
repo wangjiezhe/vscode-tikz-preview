@@ -1,6 +1,6 @@
 ---
 name: release
-description: Use when releasing a new version of the vscode-tikz-preview extension. Handles version bump, changelog updates, readme updates, commit, and git tag. Triggers on phrases like "release vX.Y.Z", "bump version", "发布新版本", "release 0.3.0".
+description: Use when releasing a new version of the vscode-tikz-preview extension. Handles version bump, changelog updates, readme updates, commit, and git tag. Triggers on phrases like "release vX.Y.Z", "bump version", "bump major/minor/patch version", "发布新版本", "release 0.3.0".
 ---
 
 # Release Workflow
@@ -13,14 +13,29 @@ Carry out each step in order.
 
 ### 1. Determine the new version
 
-The user should specify the version, e.g. `0.3.0`. If they don't, ask.
+Read the current version from `package.json` (`"version"` field).
+
+Interpret the user's request:
+
+| Command | Action |
+|---|---|
+| `bump major version` | Increment X in X.Y.Z, reset Y and Z to 0 |
+| `bump minor version` | Increment Y in X.Y.Z, reset Z to 0 |
+| `bump patch version` | Increment Z in X.Y.Z |
+| `bump version` | Default to bumping the patch version (increment Z) |
+| `release vX.Y.Z` or explicit version | Use the version directly |
+
+Examples:
+- Current `0.2.0` + `bump major` → `1.0.0`
+- Current `0.2.0` + `bump minor` → `0.3.0`
+- Current `0.2.0` + `bump patch` → `0.2.1`
 
 ### 2. Update version in manifest files
 
 Update the `"version"` field in both files to the new version:
 
 - `package.json`
-- `package-lock.json` — has TWO places: the root `"version"` field and inside the `"packages"."".version"` entry. Use `sed` on both, or check with `grep -n '"version": "<old>"'` to verify all instances are updated.
+- `package-lock.json` — has TWO places: the root `"version"` field and inside the `"packages"."".version"` entry. Update both. Verify with `grep -n '"version": "<old>"' package-lock.json` that no old version remains.
 
 ### 3. Update CHANGELOG files
 
