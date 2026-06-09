@@ -20,8 +20,8 @@ Four settings contributed under the `TikZ Preview` heading in VS Code Settings:
 | `tikz-preview.templatePath` | `string` | `""` (empty = use built-in) | Path to `.pgs` template file |
 | `tikz-preview.templatePlaceholder` | `string` | `<>` | String in template replaced with document content |
 
-When `templatePath` is empty or the file is not found, the built-in template at
-`/usr/share/qtikz/templates/template_example.pgs` is used as fallback.
+When `templatePath` is empty or the file is not found, a built-in default template
+bundled with the extension at `templates/default.pgs` is used as fallback.
 
 ## Architecture
 
