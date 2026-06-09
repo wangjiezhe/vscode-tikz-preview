@@ -64,7 +64,7 @@ export class PreviewManager {
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src ${this.panel!.webview.cspSource}; style-src 'unsafe-inline' ${this.panel!.webview.cspSource}; img-src ${this.panel!.webview.cspSource} data:;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' ${this.panel!.webview.cspSource}; style-src 'unsafe-inline' ${this.panel!.webview.cspSource}; img-src ${this.panel!.webview.cspSource} data:;">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: #1e1e1e; color: #ccc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; display: flex; flex-direction: column; height: 100vh; }
