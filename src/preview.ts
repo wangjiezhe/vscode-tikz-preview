@@ -10,6 +10,7 @@ export class PreviewManager {
 
     show(title: string): void {
         if (this.panel) {
+            this.panel.title = `${title} - Preview`;
             this.panel.reveal(vscode.ViewColumn.Beside, true);
             return;
         }
