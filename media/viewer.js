@@ -33,11 +33,34 @@
 
     function updateUI() {
         if (!pdfDoc) return;
-        zoomLevel.textContent = Math.round(currentScale * 100) + '%';
+        zoomLevel.value = Math.round(currentScale * 100) + '%';
         pageInfo.textContent = 'Page ' + currentPage + ' / ' + pdfDoc.numPages;
         prevBtn.classList.toggle('hidden', pdfDoc.numPages <= 1);
         nextBtn.classList.toggle('hidden', pdfDoc.numPages <= 1);
     }
+
+    function applyZoomInput() {
+        var val = zoomLevel.value.replace('%', '').trim();
+        var num = parseFloat(val);
+        if (!isNaN(num) && num > 0) {
+            fitWidth = false;
+            currentScale = Math.min(5, Math.max(0.1, num / 100));
+            renderPage(currentPage);
+        } else {
+            zoomLevel.value = Math.round(currentScale * 100) + '%';
+        }
+    }
+
+    zoomLevel.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            zoomLevel.blur();
+        }
+    });
+
+    zoomLevel.addEventListener('blur', function () {
+        applyZoomInput();
+    });
 
     function fitToWidth() {
         if (!pdfDoc) return;

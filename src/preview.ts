@@ -72,6 +72,8 @@ body { background: #1e1e1e; color: #ccc; font-family: -apple-system, BlinkMacSys
 .toolbar button { background: #3e3e3e; color: #ccc; border: none; padding: 4px 10px; border-radius: 3px; cursor: pointer; font-size: 13px; }
 .toolbar button:hover { background: #505050; }
 .toolbar span { font-size: 13px; }
+.toolbar input { background: #3e3e3e; color: #ccc; border: none; padding: 4px 6px; border-radius: 3px; font-size: 13px; text-align: center; width: 55px; }
+.toolbar input:focus { outline: 1px solid #007acc; }
 .viewport { flex: 1; overflow: auto; display: flex; justify-content: center; padding: 16px; }
 canvas { box-shadow: 0 0 10px rgba(0,0,0,.5); flex-shrink: 0; }
 .error { color: #f48771; padding: 16px; white-space: pre-wrap; font-family: monospace; font-size: 12px; flex: 1; overflow: auto; }
@@ -81,7 +83,7 @@ canvas { box-shadow: 0 0 10px rgba(0,0,0,.5); flex-shrink: 0; }
 <body>
 <div class="toolbar">
   <button id="zoomOut">−</button>
-  <span id="zoomLevel">100%</span>
+  <input id="zoomLevel" type="text" value="100%" size="5">
   <button id="zoomIn">+</button>
   <button id="fitWidth">Fit Width</button>
   <span id="pageInfo" style="margin-left:auto"></span>
