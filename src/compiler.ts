@@ -138,6 +138,39 @@ export class Compiler {
         }
     }
 
+    async convertToSvg(pdfPath: string, baseName: string, converter: string): Promise<string> {
+        const svgPath = path.join(this.tempDir!, baseName + '.svg');
+        const args = converter === 'pdf2svg'
+            ? [pdfPath, svgPath]
+            : ['-svg', pdfPath, svgPath];
+        const cmd = converter === 'pdf2svg' ? 'pdf2svg' : 'pdftocairo';
+
+        return new Promise((resolve, reject) => {
+            const proc = cp.spawn(cmd, args);
+            let stderr = '';
+
+            proc.stderr?.on('data', (data: Buffer) => {
+                stderr += data.toString();
+            });
+
+            proc.on('close', (code) => {
+                if (code === 0 && fs.existsSync(svgPath)) {
+                    resolve(svgPath);
+                } else {
+                    reject(new Error(`${cmd} failed: ${stderr || 'unknown error'}`));
+                }
+            });
+
+            proc.on('error', (err) => {
+                if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
+                    reject(new Error(`SVG converter not found: ${cmd}`));
+                } else {
+                    reject(err);
+                }
+            });
+        });
+    }
+
     private extractError(output: string): string {
         const lines = output.split('\n');
         const errorLines: string[] = [];

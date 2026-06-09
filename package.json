@@ -73,6 +73,18 @@
           },
           "default": [".tikz", ".pgf", ".tkz"],
           "description": "File extensions that trigger automatic preview."
+        },
+        "tikz-preview.previewMode": {
+          "type": "string",
+          "enum": ["pdf", "svg"],
+          "default": "pdf",
+          "description": "Preview mode: 'pdf' uses the built-in PDF.js viewer, 'svg' converts via pdftocairo/pdf2svg and opens in the jock.svg extension."
+        },
+        "tikz-preview.svgConverter": {
+          "type": "string",
+          "enum": ["pdftocairo", "pdf2svg"],
+          "default": "pdftocairo",
+          "description": "PDF-to-SVG converter command used when previewMode is 'svg'."
         }
       }
     }

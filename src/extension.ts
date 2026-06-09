@@ -25,6 +25,8 @@ export function activate(context: vscode.ExtensionContext) {
             templatePath: cfg.get<string>('templatePath', ''),
             placeholder: cfg.get<string>('templatePlaceholder', '<>'),
             autoOpen: cfg.get<boolean>('autoOpen', false),
+            previewMode: cfg.get<string>('previewMode', 'pdf'),
+            svgConverter: cfg.get<string>('svgConverter', 'pdftocairo'),
         };
     }
 
@@ -48,7 +50,16 @@ export function activate(context: vscode.ExtensionContext) {
         );
 
         if ('pdfPath' in result) {
-            preview.render(result.pdfPath);
+            if (config.previewMode === 'svg') {
+                try {
+                    const svgPath = await compiler.convertToSvg(result.pdfPath, baseName, config.svgConverter);
+                    await vscode.commands.executeCommand('_svg.showSvgByUri', vscode.Uri.file(svgPath));
+                } catch (err) {
+                    preview.showError((err as Error).message);
+                }
+            } else {
+                preview.render(result.pdfPath);
+            }
         } else {
             preview.showError(result.error);
         }
