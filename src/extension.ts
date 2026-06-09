@@ -1,3 +1,4 @@
+import * as path from 'path';
 import * as vscode from 'vscode';
 import { Compiler } from './compiler';
 import { PreviewManager } from './preview';
@@ -31,12 +32,14 @@ export function activate(context: vscode.ExtensionContext) {
     async function doCompile(editor: vscode.TextEditor) {
         const config = getConfig();
         const text = editor.document.getText();
+        const baseName = path.basename(editor.document.fileName, path.extname(editor.document.fileName));
         const result = await compiler.compile(
             text,
             config.templatePath,
             config.placeholder,
             config.latexCommand,
-            config.shellEscape
+            config.shellEscape,
+            baseName
         );
 
         if ('pdfPath' in result) {

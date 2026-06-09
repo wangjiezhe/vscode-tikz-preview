@@ -26,7 +26,8 @@ export class Compiler {
         templatePath: string,
         placeholder: string,
         latexCommand: string,
-        shellEscape: boolean
+        shellEscape: boolean,
+        baseName: string
     ): Promise<CompileResult> {
         if (this.currentProcess) {
             this.currentProcess.kill();
@@ -40,7 +41,8 @@ export class Compiler {
             this.tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'tikz-preview-'));
         }
 
-        const sourcePath = path.join(this.tempDir, 'source.tex');
+        const texFile = baseName + '.tex';
+        const sourcePath = path.join(this.tempDir, texFile);
         fs.writeFileSync(sourcePath, source);
 
         if (this.templateDir) {
@@ -55,7 +57,7 @@ export class Compiler {
         if (shellEscape) {
             args.push('-shell-escape');
         }
-        args.push('source.tex');
+        args.push(texFile);
 
         return new Promise((resolve) => {
             let stdout = '';
@@ -75,7 +77,8 @@ export class Compiler {
 
             this.currentProcess.on('close', (code) => {
                 this.currentProcess = null;
-                const pdfPath = path.join(this.tempDir!, 'source.pdf');
+                const pdfFile = baseName + '.pdf';
+                const pdfPath = path.join(this.tempDir!, pdfFile);
                 if (code === 0 && fs.existsSync(pdfPath)) {
                     resolve({ pdfPath });
                 } else {
