@@ -44,7 +44,6 @@ export class PreviewManager {
     showError(message: string): void {
         this.outputChannel.clear();
         this.outputChannel.appendLine(message);
-        this.outputChannel.show(true);
         if (this.panel) {
             this.panel.webview.postMessage({ type: 'error', message });
         }
