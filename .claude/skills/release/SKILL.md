@@ -35,7 +35,7 @@ Examples:
 Update the `"version"` field in both files to the new version:
 
 - `package.json`
-- `package-lock.json` — has TWO places: the root `"version"` field and inside the `"packages"."".version"` entry. Update both. Verify with `grep -n '"version": "<old>"' package-lock.json` that no old version remains.
+- `package-lock.json` — has TWO places that need updating (root and `"packages"."".version"`), but **never use blanket `sed`** — it may match dependency versions. Instead, update only the specific lines. Afterward, run `git diff package-lock.json | grep 'version'` to verify only the two expected lines changed.
 
 ### 3. Update CHANGELOG files
 
