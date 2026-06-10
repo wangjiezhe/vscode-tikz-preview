@@ -38,6 +38,11 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     async function doCompile(editor: vscode.TextEditor) {
+        if (!vscode.workspace.isTrusted) {
+            preview.showError('TikZ Preview is disabled in untrusted workspaces.');
+            return;
+        }
+
         const config = getConfig();
         const text = editor.document.getText();
         const baseName = path.basename(editor.document.fileName, path.extname(editor.document.fileName));
