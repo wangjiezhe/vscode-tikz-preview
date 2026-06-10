@@ -13,6 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
     let svgActive = false;
     let activeSvgUri: vscode.Uri | null = null;
     let activeSvgLabel: string | null = null;
+    let compileSequence = 0;
 
     function getAutoExtensions(): Set<string> {
         const cfg = vscode.workspace.getConfiguration('tikz-preview');
@@ -76,6 +77,7 @@ export function activate(context: vscode.ExtensionContext) {
             return;
         }
 
+        const sequence = ++compileSequence;
         const config = getConfig();
         const text = editor.document.getText();
         const baseName = path.basename(editor.document.fileName, path.extname(editor.document.fileName));
@@ -88,16 +90,27 @@ export function activate(context: vscode.ExtensionContext) {
             baseName
         );
 
+        if (sequence !== compileSequence) {
+            return;
+        }
+
         if ('pdfPath' in result) {
             if (config.previewMode === 'svg') {
                 try {
                     const svgPath = await compiler.convertToSvg(result.pdfPath, baseName, config.svgConverter);
+                    if (sequence !== compileSequence) {
+                        return;
+                    }
+
                     activeSvgUri = vscode.Uri.file(svgPath);
                     activeSvgLabel = path.basename(svgPath);
                     if (config.autoOpen || svgActive) {
                         await vscode.commands.executeCommand('_svg.showSvgByUri', activeSvgUri);
                     }
                 } catch (err) {
+                    if (sequence !== compileSequence) {
+                        return;
+                    }
                     preview.showError((err as Error).message);
                 }
             } else {
@@ -114,6 +127,9 @@ export function activate(context: vscode.ExtensionContext) {
         }
         debounceTimer = setTimeout(() => {
             debounceTimer = null;
+            if (vscode.window.activeTextEditor?.document !== editor.document || !shouldCompile()) {
+                return;
+            }
             doCompile(editor);
         }, 1000);
     }
@@ -134,6 +150,11 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Update preview when switching to a TikZ file
     const activeEditorChange = vscode.window.onDidChangeActiveTextEditor((editor) => {
+        if (debounceTimer) {
+            clearTimeout(debounceTimer);
+            debounceTimer = null;
+        }
+
         if (editor && isTikzFile(editor)) {
             const config = getConfig();
             if (shouldCompile(config)) {
