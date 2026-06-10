@@ -1,9 +1,14 @@
 {
   "name": "vscode-tikz-preview",
-  "displayName": "vscode-tikz-preview",
-  "description": "Render tikz lively like ktikz",
+  "displayName": "TikZ Preview",
+  "description": "Preview tikz lively like KtikZ",
   "version": "0.3.0",
   "license": "MIT",
+  "publisher": "wangjiezhe",
+  "author": {
+    "name": "Jiezhe Wang"
+  },
+  "icon": "icon.png",
   "engines": {
     "vscode": "^1.120.0"
   },
@@ -11,6 +16,10 @@
     "type": "git",
     "url": "https://github.com/wangjiezhe/vscode-tikz-preview"
   },
+  "bugs": {
+    "url": "https://github.com/wangjiezhe/vscode-tikz-preview/issue"
+  },
+  "homepage": "https://github.com/wangjiezhe/vscode-tikz-preview#readme",
   "capabilities": {
     "untrustedWorkspaces": {
       "supported": false
@@ -19,14 +28,27 @@
   "extensionDependencies": [
     "jock.svg"
   ],
+  "keywords": [
+    "latex",
+    "tikz",
+    "math",
+    "pgfplot",
+    "pdf",
+    "svg",
+    "preview",
+    "visualization",
+    "render"
+  ],
   "categories": [
+    "Visualization",
+    "Programming Languages",
+    "Education",
     "Other"
   ],
   "activationEvents": [
     "workspaceContains:**/*.tikz",
     "workspaceContains:**/*.pgf",
-    "workspaceContains:**/*.tkz",
-    "onCommand:tikz-preview.preview"
+    "workspaceContains:**/*.tkz"
   ],
   "main": "./dist/extension.js",
   "contributes": {
