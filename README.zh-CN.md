@@ -8,7 +8,7 @@
 
 - **实时预览** — 文件修改后自动编译（1 秒防抖）
 - **可配置编译器** — 支持 `pdflatex`、`lualatex`、`xelatex`，可开启 shell-escape
-- **模板系统** — 使用自定义 `.pgs` 模板文件，或使用内置默认模板
+- **模板系统** — 使用自定义 `.pgs` 模板文件，或使用内置默认模板（来自 KtikZ 的 `template_example.pgs`）
 - **缩放控制** — 放大/缩小、适应宽度、手动输入百分比
 - **错误显示** — 编译错误直接显示在预览面板中
 - **SVG 预览** — 可选 SVG 模式，通过 `jock.svg` 扩展显示（pdftocairo/pdf2svg 转换）
@@ -23,6 +23,35 @@
 **SVG 预览：**
 
 ![SVG 预览](screenshots/preview-svg.png)
+
+以上截图使用了以下模板（`tkz-elements.pgs`）：
+
+```latex
+% !TEX TS-program = lualatex
+\documentclass{article}
+\usepackage{mathptmx}
+\usepackage[dvipsnames,svgnames]{xcolor}
+\usepackage[mini]{tkz-euclide}
+\usepackage{tkz-elements}
+\usepackage{tkz-fct}
+\tikzset {
+  dots/.style={shape=circle, color=#1!30!black, fill=#1!70!black, minimum size=2},
+  dots/.default=black,
+  lines/.style={line width=0.8pt, color=#1},
+  lines/.default=black,
+  helplines/.style={line width=0.8pt, color=#1, densely dashed},
+  helplines/.default=green!70!black
+}
+\usepackage[active,pdftex,tightpage]{preview}
+\PreviewEnvironment[]{tikzpicture}
+\PreviewEnvironment[]{pgfpicture}
+\DeclareSymbolFont{symbolsb}{OMS}{cmsy}{m}{n}
+\SetSymbolFont{symbolsb}{bold}{OMS}{cmsy}{b}{n}
+\DeclareSymbolFontAlphabet{\mathcal}{symbolsb}
+\begin{document}
+<>
+\end{document}
+```
 
 ## 依赖
 
@@ -56,7 +85,7 @@
 
 - PDF.js 在主线程模式下运行，以规避 CSP 对 Web Worker 的限制
 
-## Release Notes
+## 版本说明
 
 ### 0.3.0
 

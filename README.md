@@ -10,7 +10,7 @@ Edit `.tikz`, `.pgf`, or `.tkz` files and see the compiled PDF update in a side 
 
 - **Live preview** — auto-compiles on file changes (1s debounce)
 - **Configurable compiler** — supports `pdflatex`, `lualatex`, `xelatex`, shell-escape
-- **Template system** — use custom `.pgs` template files, or the bundled default
+- **Template system** — use custom `.pgs` template files, or the bundled default (from KtikZ's `template_example.pgs`)
 - **Zoom controls** — zoom in/out, fit-to-width, or type a percentage manually
 - **Error display** — compilation errors shown inline in the preview panel
 - **SVG preview** — optional SVG mode via `jock.svg` extension (pdftocairo/pdf2svg conversion)
@@ -25,6 +25,35 @@ Edit `.tikz`, `.pgf`, or `.tkz` files and see the compiled PDF update in a side 
 **SVG preview:**
 
 ![SVG preview](screenshots/preview-svg.png)
+
+The screenshots above use the following template (`tkz-elements.pgs`):
+
+```latex
+% !TEX TS-program = lualatex
+\documentclass{article}
+\usepackage{mathptmx}
+\usepackage[dvipsnames,svgnames]{xcolor}
+\usepackage[mini]{tkz-euclide}
+\usepackage{tkz-elements}
+\usepackage{tkz-fct}
+\tikzset {
+  dots/.style={shape=circle, color=#1!30!black, fill=#1!70!black, minimum size=2},
+  dots/.default=black,
+  lines/.style={line width=0.8pt, color=#1},
+  lines/.default=black,
+  helplines/.style={line width=0.8pt, color=#1, densely dashed},
+  helplines/.default=green!70!black
+}
+\usepackage[active,pdftex,tightpage]{preview}
+\PreviewEnvironment[]{tikzpicture}
+\PreviewEnvironment[]{pgfpicture}
+\DeclareSymbolFont{symbolsb}{OMS}{cmsy}{m}{n}
+\SetSymbolFont{symbolsb}{bold}{OMS}{cmsy}{b}{n}
+\DeclareSymbolFontAlphabet{\mathcal}{symbolsb}
+\begin{document}
+<>
+\end{document}
+```
 
 ## Requirements
 
