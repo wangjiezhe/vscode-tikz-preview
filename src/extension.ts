@@ -11,6 +11,8 @@ export function activate(context: vscode.ExtensionContext) {
 
     let debounceTimer: ReturnType<typeof setTimeout> | null = null;
     let svgActive = false;
+    let activeSvgUri: vscode.Uri | null = null;
+    let activeSvgLabel: string | null = null;
 
     function getAutoExtensions(): Set<string> {
         const cfg = vscode.workspace.getConfiguration('tikz-preview');
@@ -43,6 +45,31 @@ export function activate(context: vscode.ExtensionContext) {
             || preview.isVisible();
     }
 
+    function tabInputUri(input: vscode.Tab['input']): vscode.Uri | undefined {
+        if (
+            input instanceof vscode.TabInputText ||
+            input instanceof vscode.TabInputCustom ||
+            input instanceof vscode.TabInputNotebook
+        ) {
+            return input.uri;
+        }
+
+        if (input instanceof vscode.TabInputTextDiff || input instanceof vscode.TabInputNotebookDiff) {
+            return input.modified;
+        }
+
+        return undefined;
+    }
+
+    function isActiveSvgTab(tab: vscode.Tab): boolean {
+        const uri = tabInputUri(tab.input);
+        if (activeSvgUri && uri && uri.toString() === activeSvgUri.toString()) {
+            return true;
+        }
+
+        return !!activeSvgLabel && tab.label.includes(activeSvgLabel);
+    }
+
     async function doCompile(editor: vscode.TextEditor) {
         if (!vscode.workspace.isTrusted) {
             preview.showError('TikZ Preview is disabled in untrusted workspaces.');
@@ -65,8 +92,10 @@ export function activate(context: vscode.ExtensionContext) {
             if (config.previewMode === 'svg') {
                 try {
                     const svgPath = await compiler.convertToSvg(result.pdfPath, baseName, config.svgConverter);
+                    activeSvgUri = vscode.Uri.file(svgPath);
+                    activeSvgLabel = path.basename(svgPath);
                     if (config.autoOpen || svgActive) {
-                        await vscode.commands.executeCommand('_svg.showSvgByUri', vscode.Uri.file(svgPath));
+                        await vscode.commands.executeCommand('_svg.showSvgByUri', activeSvgUri);
                     }
                 } catch (err) {
                     preview.showError((err as Error).message);
@@ -116,6 +145,15 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
     context.subscriptions.push(activeEditorChange);
+
+    const tabChange = vscode.window.tabGroups.onDidChangeTabs((e) => {
+        if (e.closed.some(isActiveSvgTab)) {
+            svgActive = false;
+            activeSvgUri = null;
+            activeSvgLabel = null;
+        }
+    });
+    context.subscriptions.push(tabChange);
 
     // Re-compile on document change
     const textChange = vscode.workspace.onDidChangeTextDocument((e) => {
