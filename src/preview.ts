@@ -8,7 +8,7 @@ export class PreviewManager {
         this.outputChannel = vscode.window.createOutputChannel('TikZ Preview');
     }
 
-    show(title: string): void {
+    show(title: string, localResourceRoot: string): void {
         if (this.panel) {
             this.panel.title = `${title} - Preview`;
             this.panel.reveal(vscode.ViewColumn.Beside, true);
@@ -24,7 +24,7 @@ export class PreviewManager {
                 retainContextWhenHidden: true,
                 localResourceRoots: [
                     vscode.Uri.joinPath(this.extensionUri, 'media'),
-                    vscode.Uri.file('/tmp'),
+                    vscode.Uri.file(localResourceRoot),
                 ],
             }
         );

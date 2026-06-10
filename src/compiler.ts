@@ -22,6 +22,13 @@ export class Compiler {
 
     constructor(private extensionUri: vscode.Uri) {}
 
+    ensureTempDir(): string {
+        if (!this.tempDir) {
+            this.tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'tikz-preview-'));
+        }
+        return this.tempDir;
+    }
+
     async compile(
         documentText: string,
         templatePath: string,
@@ -38,12 +45,10 @@ export class Compiler {
         const template = this.loadTemplate(templatePath);
         const source = template.split(placeholder).join(documentText);
 
-        if (!this.tempDir) {
-            this.tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'tikz-preview-'));
-        }
+        const tempDir = this.ensureTempDir();
 
         const texFile = baseName + '.tex';
-        const sourcePath = path.join(this.tempDir, texFile);
+        const sourcePath = path.join(tempDir, texFile);
         fs.writeFileSync(sourcePath, source);
 
         if (this.templateDir) {

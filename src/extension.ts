@@ -89,7 +89,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (!editor) { return; }
         const config = getConfig();
         if (config.previewMode === 'pdf') {
-            preview.show(editor.document.fileName);
+            preview.show(editor.document.fileName, compiler.ensureTempDir());
         } else {
             svgActive = true;
         }
@@ -106,7 +106,7 @@ export function activate(context: vscode.ExtensionContext) {
                 || preview.isVisible();
             if (shouldCompile) {
                 if (config.previewMode === 'pdf') {
-                    preview.show(editor.document.fileName);
+                    preview.show(editor.document.fileName, compiler.ensureTempDir());
                 }
                 doCompile(editor);
             }
@@ -136,7 +136,7 @@ export function activate(context: vscode.ExtensionContext) {
             || preview.isVisible();
         if (shouldCompile) {
             if (config.previewMode === 'pdf') {
-                preview.show(activeEditor.document.fileName);
+                preview.show(activeEditor.document.fileName, compiler.ensureTempDir());
             }
             doCompile(activeEditor);
         }
