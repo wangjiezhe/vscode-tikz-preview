@@ -37,6 +37,12 @@ export function activate(context: vscode.ExtensionContext) {
         return getAutoExtensions().has(ext);
     }
 
+    function shouldCompile(config = getConfig()): boolean {
+        return config.autoOpen
+            || svgActive
+            || preview.isVisible();
+    }
+
     async function doCompile(editor: vscode.TextEditor) {
         if (!vscode.workspace.isTrusted) {
             preview.showError('TikZ Preview is disabled in untrusted workspaces.');
@@ -101,10 +107,7 @@ export function activate(context: vscode.ExtensionContext) {
     const activeEditorChange = vscode.window.onDidChangeActiveTextEditor((editor) => {
         if (editor && isTikzFile(editor)) {
             const config = getConfig();
-            const shouldCompile = config.autoOpen
-                || svgActive
-                || preview.isVisible();
-            if (shouldCompile) {
+            if (shouldCompile(config)) {
                 if (config.previewMode === 'pdf') {
                     preview.show(editor.document.fileName, compiler.ensureTempDir());
                 }
@@ -120,7 +123,8 @@ export function activate(context: vscode.ExtensionContext) {
         if (
             editor &&
             e.document === editor.document &&
-            isTikzFile(editor)
+            isTikzFile(editor) &&
+            shouldCompile()
         ) {
             triggerCompile(editor);
         }
@@ -131,10 +135,7 @@ export function activate(context: vscode.ExtensionContext) {
     const activeEditor = vscode.window.activeTextEditor;
     if (activeEditor && isTikzFile(activeEditor)) {
         const config = getConfig();
-        const shouldCompile = config.autoOpen
-            || svgActive
-            || preview.isVisible();
-        if (shouldCompile) {
+        if (shouldCompile(config)) {
             if (config.previewMode === 'pdf') {
                 preview.show(activeEditor.document.fileName, compiler.ensureTempDir());
             }
