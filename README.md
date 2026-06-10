@@ -48,6 +48,10 @@ Templates use a placeholder (default `<>`) that is replaced with your document c
 
 ## Release Notes
 
+### 0.3.0
+
+Workspace trust guard, smarter recompilation, SVG preview state management.
+
 ### 0.2.1
 
 Extension dependency declaration, release skill, minor fixes.

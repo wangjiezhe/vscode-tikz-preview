@@ -2,6 +2,18 @@
 
 [中文更新日志](CHANGELOG.zh-CN.md)
 
+## [0.3.0] - 2026-06-10
+
+### Added
+- Workspace trust guard — compilation is blocked in untrusted workspaces
+
+### Changed
+- Preview panel respects active preview state — no unnecessary recompilation
+- SVG preview state resets when the preview tab is closed
+
+### Fixed
+- Stale compilation results are ignored when a new compile starts
+
 ## [0.2.1] - 2026-06-10
 
 ### Added
