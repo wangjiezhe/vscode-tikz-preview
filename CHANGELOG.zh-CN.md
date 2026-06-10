@@ -1,5 +1,11 @@
 # 更新日志
 
+## [0.3.2] - 2026-06-10
+
+### 变更
+- 截图链接改用 `raw.githubusercontent.com` 绝对路径
+- 通过 `.vscodeignore` 从扩展包中排除 `screenshots/`
+
 ## [0.3.1] - 2026-06-10
 
 ### 新增

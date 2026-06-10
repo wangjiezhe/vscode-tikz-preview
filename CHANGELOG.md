@@ -2,6 +2,12 @@
 
 [中文更新日志](CHANGELOG.zh-CN.md)
 
+## [0.3.2] - 2026-06-10
+
+### Changed
+- Screenshot links use `raw.githubusercontent.com` instead of local paths
+- Exclude `screenshots/` from extension bundle via `.vscodeignore`
+
 ## [0.3.1] - 2026-06-10
 
 ### Added

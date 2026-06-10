@@ -90,6 +90,10 @@ Templates use a placeholder (default `<>`) that is replaced with your document c
 
 ## Release Notes
 
+### 0.3.2
+
+Use absolute URLs for screenshot images and exclude them from the extension bundle.
+
 ### 0.3.1
 
 Improved documentation — screenshots, template, SVG dependency, and KtikZ reference.
