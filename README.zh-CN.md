@@ -18,11 +18,11 @@
 
 **PDF 预览：**
 
-![PDF 预览](screenshots/preview-pdf.png)
+![PDF 预览](https://raw.githubusercontent.com/wangjiezhe/vscode-tikz-preview/main/screenshots/preview-pdf.png)
 
 **SVG 预览：**
 
-![SVG 预览](screenshots/preview-svg.png)
+![SVG 预览](https://raw.githubusercontent.com/wangjiezhe/vscode-tikz-preview/main/screenshots/preview-svg.png)
 
 以上截图使用了以下模板（`tkz-elements.pgs`）：
 

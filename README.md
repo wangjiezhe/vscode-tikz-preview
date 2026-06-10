@@ -20,11 +20,11 @@ Edit `.tikz`, `.pgf`, or `.tkz` files and see the compiled PDF update in a side 
 
 **PDF preview:**
 
-![PDF preview](screenshots/preview-pdf.png)
+![PDF preview](https://raw.githubusercontent.com/wangjiezhe/vscode-tikz-preview/main/screenshots/preview-pdf.png)
 
 **SVG preview:**
 
-![SVG preview](screenshots/preview-svg.png)
+![SVG preview](https://raw.githubusercontent.com/wangjiezhe/vscode-tikz-preview/main/screenshots/preview-svg.png)
 
 The screenshots above use the following template (`tkz-elements.pgs`):
 
