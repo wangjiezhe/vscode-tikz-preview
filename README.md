@@ -57,7 +57,8 @@ The screenshots above use the following template (`tkz-elements.pgs`):
 
 ## Requirements
 
-- A LaTeX distribution with `pdflatex` (or your chosen compiler) on `PATH`
+- A LaTeX distribution with `pdflatex` (or your chosen compiler, like `lualatex`) on `PATH`
+- **SVG preview mode** requires `pdftocairo` (from [poppler](https://poppler.freedesktop.org/)) or [`pdf2svg`](https://github.com/dawbarton/pdf2svg/) on `PATH`
 - VS Code 1.120+
 
 ## Extension Settings

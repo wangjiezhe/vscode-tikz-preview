@@ -55,7 +55,8 @@
 
 ## 依赖
 
-- 系统需安装 LaTeX 发行版，`pdflatex`（或你选择的编译器）需在 `PATH` 中
+- 系统需安装 LaTeX 发行版，`pdflatex`（或你选择的编译器，例如`lualatex`）需在 `PATH` 中
+- **SVG 预览模式**需要 `PATH` 中包含 `pdftocairo`（来自 [poppler](https://poppler.freedesktop.org/)）或 [`pdf2svg`](https://github.com/dawbarton/pdf2svg/)
 - VS Code 1.120+
 
 ## 扩展设置
