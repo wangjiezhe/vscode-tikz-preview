@@ -1,5 +1,20 @@
 # 更新日志
 
+## [0.3.1] - 2026-06-10
+
+### 新增
+- PDF 和 SVG 预览截图
+- README 中附上 `tkz-elements.pgs` 模板内容
+- README 中说明 SVG 转换器（`pdftocairo` / `pdf2svg`）依赖
+- KtikZ 配置与使用参考
+
+### 变更
+- README 标题行标注同时支持 PDF 和 SVG 两种预览模式
+- 中文 README："Release Notes" 改为"版本说明"
+
+### 修复
+- 修正 `package.json` 中的 bugs URL
+
 ## [0.3.0] - 2026-06-10
 
 ### 新增

@@ -90,6 +90,10 @@ Templates use a placeholder (default `<>`) that is replaced with your document c
 
 ## Release Notes
 
+### 0.3.1
+
+Improved documentation — screenshots, template, SVG dependency, and KtikZ reference.
+
 ### 0.3.0
 
 Workspace trust guard, smarter recompilation, SVG preview state management.

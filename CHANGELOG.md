@@ -2,6 +2,21 @@
 
 [中文更新日志](CHANGELOG.zh-CN.md)
 
+## [0.3.1] - 2026-06-10
+
+### Added
+- Screenshots of PDF and SVG preview
+- `tkz-elements.pgs` template content in README
+- SVG converter (`pdftocairo` / `pdf2svg`) dependency note in README
+- KtikZ reference for configuration and usage guidance
+
+### Changed
+- README tagline now highlights both PDF and SVG preview modes
+- Chinese README: "Release Notes" translated to Chinese
+
+### Fixed
+- Correct bugs URL in `package.json`
+
 ## [0.3.0] - 2026-06-10
 
 ### Added
