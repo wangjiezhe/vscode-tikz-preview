@@ -1,6 +1,6 @@
 # TikZ Preview
 
-Live preview for TikZ files in VS Code — like KtikZ, but inside your editor.
+Live preview for TikZ files in VS Code — like KtikZ, but inside your editor. Supports both **PDF** and **SVG** preview modes.
 
 [中文说明](README.zh-CN.md)
 
@@ -15,6 +15,16 @@ Edit `.tikz`, `.pgf`, or `.tkz` files and see the compiled PDF update in a side 
 - **Error display** — compilation errors shown inline in the preview panel
 - **SVG preview** — optional SVG mode via `jock.svg` extension (pdftocairo/pdf2svg conversion)
 - **Dark theme** — preview panel matches VS Code's dark interface
+
+## Screenshots
+
+**PDF preview:**
+
+![PDF preview](screenshots/preview-pdf.png)
+
+**SVG preview:**
+
+![SVG preview](screenshots/preview-svg.png)
 
 ## Requirements
 
@@ -35,6 +45,8 @@ Edit `.tikz`, `.pgf`, or `.tkz` files and see the compiled PDF update in a side 
 | `tikz-preview.svgConverter` | `string` | `"pdftocairo"` | PDF-to-SVG converter: `"pdftocairo"` or `"pdf2svg"` |
 
 ## Usage
+
+The configuration and usage follow the same pattern as [KtikZ](https://github.com/fhackenberger/ktikz). If you are familiar with KtikZ, you already know how to use this extension.
 
 1. Open a `.tikz`, `.pgf`, or `.tkz` file
 2. Run `TikZ: Preview` from the command palette, or click the bolt icon in the editor toolbar

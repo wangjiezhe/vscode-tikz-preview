@@ -1,6 +1,6 @@
 # TikZ Preview
 
-在 VS Code 中实时预览 TikZ 文件 — 类似 KtikZ，但集成在编辑器内。
+在 VS Code 中实时预览 TikZ 文件 — 类似 KtikZ，但集成在编辑器内。同时支持 **PDF** 和 **SVG** 两种预览模式。
 
 编辑 `.tikz`、`.pgf` 或 `.tkz` 文件，在侧边面板中查看编译后的 PDF。
 
@@ -13,6 +13,16 @@
 - **错误显示** — 编译错误直接显示在预览面板中
 - **SVG 预览** — 可选 SVG 模式，通过 `jock.svg` 扩展显示（pdftocairo/pdf2svg 转换）
 - **深色主题** — 预览面板与 VS Code 深色界面一致
+
+## 屏幕截图
+
+**PDF 预览：**
+
+![PDF 预览](screenshots/preview-pdf.png)
+
+**SVG 预览：**
+
+![SVG 预览](screenshots/preview-svg.png)
 
 ## 依赖
 
@@ -33,6 +43,8 @@
 | `tikz-preview.svgConverter` | `string` | `"pdftocairo"` | PDF 转 SVG 工具：`"pdftocairo"` 或 `"pdf2svg"` |
 
 ## 使用方法
+
+配置和使用方法与 [KtikZ](https://github.com/fhackenberger/ktikz) 相同。如果你熟悉 KtikZ，就已经知道如何使用本扩展。
 
 1. 打开一个 `.tikz`、`.pgf` 或 `.tkz` 文件
 2. 在命令面板中运行 `TikZ: Preview`，或点击编辑器工具栏的闪电图标
